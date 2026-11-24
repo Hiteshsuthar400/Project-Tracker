@@ -1,0 +1,2930 @@
+# PROJECT TRACKER
+## Civil & Interior Construction Project Management Android Application
+
+### MASTER DEVELOPMENT PROMPT — PRODUCTION BUILD
+
+You are an expert **Android Application Architect, Construction ERP Architect, Civil & Interior Project Management Consultant, Quantity Surveyor, Billing Engineer, Project Manager, Database Architect, UI/UX Designer, Full-Stack Developer, QA Engineer, and Cybersecurity Engineer**.
+
+Your task is to design and build a **production-ready Android application named `Project Tracker`** for complete **Civil Construction and Interior Fit-Out Project Management**.
+
+The application must manage the complete project lifecycle from:
+
+**Tender → Tender Evaluation → LOI → Work Order → Project Registration → Mobilization → Design → Drawing → BOQ → Procurement → Material Approval → Material Inspection → Site Execution → DPR → QA/QC → WIR → Measurement → RAB → Invoice → Payment → Variation → New Item → EOT → Claims → Subcontract Billing → Snagging → Testing & Commissioning → As-Built → Handover → Final Bill → Final Account → DLP/Warranty → Project Closure**
+
+Do **not** create a simple demo, static UI, or mock dashboard.
+
+Build the application as a **modular, scalable, secure, offline-first construction management system** suitable for actual Civil and Interior contracting companies.
+
+---
+
+# 1. APPLICATION IDENTITY
+
+### Application Name
+
+**Project Tracker**
+
+### Subtitle
+
+**Civil & Interior Construction Project Management**
+
+### Suggested Android Package
+
+```text
+com.projecttracker.construction
+```
+
+### Application Type
+
+Android mobile/tablet application with cloud database and offline capability.
+
+### Primary Users
+
+- Admin
+- Super Admin
+- Project Manager
+- QS
+- Billing Engineer
+- Site Engineer
+- Planning Engineer
+- QA/QC Engineer
+- Procurement Engineer
+- Store Keeper
+- Safety Engineer
+- Document Controller
+- Subcontractor
+- Management
+- Client
+- Viewer
+
+---
+
+# 2. CORE OBJECTIVE
+
+Project Tracker must provide one centralized system for managing:
+
+### Commercial
+- Tender
+- BOQ
+- Rate Analysis
+- Work Order
+- Contract
+- Billing
+- RAB
+- Tax Invoice
+- Payment
+- Receivable
+- Variation
+- New Item
+- EOT
+- Claims
+- Final Account
+
+### Site Execution
+- DPR
+- Activity
+- Progress
+- Manpower
+- Equipment
+- Material
+- Measurements
+- WIR
+- NCR
+- Inspection
+- Snagging
+
+### Procurement
+- Material Request
+- MAS
+- RFQ
+- Vendor Quotation
+- Comparison
+- Purchase Order
+- Delivery
+- MIR
+- Material Issue
+- Material Return
+
+### Project Documentation
+- Drawings
+- Drawing Revisions
+- RFI
+- Technical Submittals
+- MOM
+- Site Photos
+- Documents
+- As-Built
+- O&M Manuals
+- Handover
+
+### Project Completion
+- Snagging
+- Testing & Commissioning
+- Handover
+- Final Bill
+- Final Account
+- DLP
+- Warranty
+- Project Closure
+
+---
+
+# 3. DEVELOPMENT PRINCIPLE
+
+Do NOT generate the entire application in one response.
+
+Develop the application sequentially through phases.
+
+Each phase must:
+
+1. Be implemented.
+2. Be tested.
+3. Be reviewed for errors.
+4. Be integrated with previous phases.
+5. Be documented.
+6. Only then proceed to the next phase.
+
+Never replace working modules with simplified demo versions.
+
+Do not create:
+
+```text
+TODO
+Coming Soon
+Demo Only
+Fake API
+Fake Database
+Placeholder Dashboard
+Mock Production Data
+```
+
+unless specifically required for a development test.
+
+---
+
+# 4. RECOMMENDED ARCHITECTURE
+
+Use a modular architecture.
+
+### Frontend
+
+Android application using:
+
+- Kotlin
+- Jetpack Compose
+- Material 3
+- Navigation
+- ViewModel
+- Repository Pattern
+- StateFlow
+- Coroutines
+- Dependency Injection
+
+Use modern Android architecture such as:
+
+```text
+UI
+ ↓
+ViewModel
+ ↓
+Use Case
+ ↓
+Repository
+ ↓
+Local Database / Remote API
+```
+
+### Local Database
+
+Use:
+
+**Room / SQLite**
+
+for offline-first local storage.
+
+### Cloud Database
+
+Use:
+
+**Google Sheets**
+
+as the initial cloud database.
+
+### Backend/API
+
+Use:
+
+**Google Apps Script Web App API**
+
+as the API layer between Android and Google Sheets.
+
+Do not expose sensitive Google Sheet credentials directly inside the Android application.
+
+### File Storage
+
+Use:
+
+**Google Drive**
+
+for:
+
+- Drawings
+- PDFs
+- BOQ files
+- Site photographs
+- WIR attachments
+- MIR documents
+- MAS documents
+- RAB documents
+- Invoices
+- EOT documents
+- Claim documents
+- Handover documents
+
+---
+
+# 5. OFFLINE-FIRST ARCHITECTURE
+
+The application must continue working when the user has no Internet connection.
+
+Offline users must be able to:
+
+- View assigned projects
+- View cached BOQ
+- Create DPR
+- Create measurements
+- Create WIR
+- Create MIR
+- Create MAS
+- Add site photographs
+- Add snag
+- Add manpower
+- Update progress
+- Create site observations
+- Create tasks
+- Save documents metadata
+
+When Internet becomes available:
+
+```text
+Local Data
+   ↓
+Sync Queue
+   ↓
+API
+   ↓
+Google Sheets
+   ↓
+Sync Confirmation
+   ↓
+Local Record Updated
+```
+
+Implement:
+
+- Sync Queue
+- Retry mechanism
+- Failed sync status
+- Conflict detection
+- Last Sync Time
+- Manual Sync
+- Automatic Sync
+- Sync Logs
+
+Use:
+
+```text
+Record_ID
+Updated_At
+Version
+Updated_By
+```
+
+for conflict management.
+
+---
+
+# 6. GOOGLE SHEETS DATABASE
+
+Create a central Google Spreadsheet:
+
+```text
+PROJECT_TRACKER_DATABASE
+```
+
+Use separate sheets/tables.
+
+## Core
+
+```text
+Users
+Companies
+Projects
+Project_Team
+Project_Roles
+Audit_Log
+Settings
+Notifications
+```
+
+## Tender
+
+```text
+Tenders
+Tender_BOQ
+Tender_Documents
+Tender_Clarifications
+Tender_Evaluation
+Tender_Rate_Analysis
+```
+
+## Contract
+
+```text
+LOI
+Work_Orders
+Contract_Conditions
+Payment_Terms
+Contract_Documents
+```
+
+## Design
+
+```text
+Drawings
+Drawing_Revisions
+RFIs
+Technical_Submittals
+Design_Approvals
+```
+
+## BOQ
+
+```text
+BOQ
+BOQ_Revisions
+BOQ_Rates
+BOQ_Quantities
+BOQ_Analysis
+```
+
+## Procurement
+
+```text
+Material_Requests
+Materials
+MAS
+MR
+RFQ
+Vendor_Quotes
+Quotation_Comparison
+PO
+Deliveries
+```
+
+## Material / Store
+
+```text
+MIR
+Material_Receipts
+Material_Issue
+Material_Return
+Stock
+Stock_Transactions
+```
+
+## Execution
+
+```text
+DPR
+Activities
+Progress
+Manpower
+Equipment
+Site_Observations
+Site_Photos
+```
+
+## QA/QC
+
+```text
+WIR
+NCR
+Inspection_Checklists
+Testing
+Test_Reports
+```
+
+## Commercial
+
+```text
+Measurements
+RAB
+RAB_Items
+Invoices
+Payments
+Receivables
+```
+
+## Variation / Claims
+
+```text
+Variations
+Variation_Items
+NT_Items
+Variation_Rate_Analysis
+EOT
+EOT_Events
+Claims
+Claim_Items
+```
+
+## Subcontract
+
+```text
+Subcontractors
+Subcontract_WO
+Subcontract_BOQ
+Subcontract_Measurements
+Subcontract_Bills
+Subcontract_Payments
+```
+
+## Management
+
+```text
+MOM
+Tasks
+Risks
+Issues
+Action_Items
+```
+
+## Completion
+
+```text
+Snags
+Testing_Commissioning
+AsBuilt
+OM_Manuals
+Handover
+Final_Bill
+Final_Account
+DLP
+Warranty
+Project_Closure
+```
+
+## Documents
+
+```text
+Documents
+Document_Revisions
+Photo_Register
+```
+
+---
+
+# 7. UNIVERSAL DATABASE FIELDS
+
+Where applicable, use:
+
+```text
+Record_ID
+Company_ID
+Project_ID
+Created_By
+Created_At
+Updated_By
+Updated_At
+Version
+Status
+Remarks
+```
+
+Use permanent IDs.
+
+Examples:
+
+```text
+PRJ-0001
+TND-0001
+WO-0001
+BOQ-0001
+MR-0001
+MAS-0001
+MIR-0001
+WIR-0001
+DPR-0001
+RAB-0001
+INV-0001
+VAR-0001
+NT-0001
+EOT-0001
+CLM-0001
+NCR-0001
+SNAG-0001
+```
+
+IDs must never be randomly replaced after record creation.
+
+---
+
+# 8. AUTHENTICATION
+
+Create secure login.
+
+Required features:
+
+- Login
+- Logout
+- Forgot Password
+- Change Password
+- Session Management
+- User Activation/Deactivation
+- Role-Based Access
+- Project-Based Access
+- Password validation
+- Audit logging
+
+User registration must be controlled by Admin.
+
+Do not allow unrestricted public registration unless enabled by Admin.
+
+---
+
+# 9. USER ROLES
+
+Implement permission-based access.
+
+### Admin
+
+Full access.
+
+### Project Manager
+
+Project-wide access.
+
+### QS
+
+Access to:
+
+- BOQ
+- Measurement
+- RAB
+- Variation
+- NT
+- EOT
+- Claims
+- Subcontract Billing
+- Commercial Reports
+
+### Billing Engineer
+
+Access to:
+
+- Measurement
+- RAB
+- Invoice
+- Payment
+- Receivable
+- Billing Reports
+
+### Site Engineer
+
+Access to:
+
+- DPR
+- Activities
+- Progress
+- WIR
+- Measurement
+- Manpower
+- Site Photos
+
+### QA/QC
+
+Access to:
+
+- MAS
+- MIR
+- WIR
+- NCR
+- Inspection
+- Testing
+
+### Procurement
+
+Access to:
+
+- MR
+- RFQ
+- Vendor
+- Quotation
+- Comparison
+- PO
+- Delivery
+
+### Store
+
+Access to:
+
+- MIR
+- Material Receipt
+- Stock
+- Material Issue
+- Material Return
+
+### Planning
+
+Access to:
+
+- Activities
+- Schedule
+- Progress
+- Delay
+- EOT
+
+### Document Controller
+
+Access to:
+
+- Documents
+- Drawings
+- Revisions
+- Transmittals
+- Records
+
+### Management
+
+View dashboards and reports.
+
+### Viewer
+
+Read-only access.
+
+---
+
+# 10. PROJECT REGISTRATION
+
+Create a complete Project Registration module.
+
+Fields:
+
+```text
+Project_ID
+Project_Name
+Project_Type
+Project_Category
+Client
+Consultant
+Architect
+PMC
+Main_Contractor
+Location
+Contract_Type
+Tender_Value
+Contract_Value
+Start_Date
+Original_Completion_Date
+Current_Completion_Date
+Project_Manager
+QS
+Billing_Engineer
+Site_Engineer
+Status
+Remarks
+```
+
+Project categories:
+
+```text
+Civil
+Interior Fit-Out
+Renovation
+Commercial
+Residential
+Hospitality
+Retail
+Office
+Hospital
+Industrial
+Infrastructure
+```
+
+---
+
+# 11. PROJECT DASHBOARD
+
+Every project must have its own dashboard.
+
+Show:
+
+```text
+Contract Value
+Tender Value
+Executed Value
+Billed Value
+Certified Value
+Received Amount
+Outstanding Amount
+Balance Contract Value
+Progress %
+Planned Progress %
+Schedule Variance
+Open RFI
+Pending MAS
+Pending MIR
+Pending WIR
+Open NCR
+Open Variation
+Pending NT
+Pending EOT
+Open Claims
+Open Snags
+Pending Actions
+Material Pending
+```
+
+Include graphical indicators.
+
+---
+
+# 12. TENDER MODULE
+
+Workflow:
+
+```text
+Tender Received
+↓
+Tender Registration
+↓
+Tender Documents
+↓
+BOQ Import
+↓
+Quantity Verification
+↓
+Rate Analysis
+↓
+Vendor/Subcontract Rates
+↓
+Tender Cost
+↓
+Overheads
+↓
+Profit
+↓
+Final Bid
+↓
+Tender Submission
+↓
+Tender Evaluation
+↓
+Won/Lost
+```
+
+Allow Excel/CSV BOQ import.
+
+Tender evaluation should support:
+
+- Technical score
+- Commercial score
+- Final quoted value
+- Competitor comparison
+- Remarks
+- Status
+
+---
+
+# 13. WORK ORDER / CONTRACT
+
+When tender is won:
+
+```text
+Tender
+↓
+LOI
+↓
+Work Order
+↓
+Project Creation
+```
+
+Store:
+
+- WO Number
+- WO Date
+- Contract Value
+- Duration
+- Start Date
+- Completion Date
+- Retention
+- Security Deposit
+- PBG
+- Mobilization Advance
+- Payment Terms
+- LD
+- Tax
+- Escalation
+- EOT Clause
+- Variation Clause
+
+---
+
+# 14. BOQ MODULE
+
+Create complete BOQ management.
+
+Fields:
+
+```text
+Item_Code
+Description
+Specification
+Unit
+Tender_Qty
+Tender_Rate
+Tender_Amount
+Approved_Qty
+Approved_Rate
+Current_Qty
+Previous_Qty
+Cumulative_Qty
+Balance_Qty
+Executed_Qty
+Executed_Value
+Status
+```
+
+Automatically calculate:
+
+```text
+Amount = Quantity × Rate
+Balance Quantity = Approved Quantity - Cumulative Quantity
+Balance Value = Balance Quantity × Rate
+```
+
+Support:
+
+- BOQ revisions
+- New items
+- Deleted items
+- Rate revisions
+- Quantity revisions
+- Client approval
+
+---
+
+# 15. DRAWING MANAGEMENT
+
+Create:
+
+```text
+Drawing Register
+Drawing Revision
+Drawing Transmittal
+Drawing Approval
+```
+
+Fields:
+
+```text
+Drawing_No
+Drawing_Title
+Discipline
+Revision
+Date
+Received_Date
+Submitted_Date
+Status
+Approved_By
+Remarks
+File_URL
+```
+
+Support:
+
+- Tender Drawing
+- IFC
+- GFC
+- Revised GFC
+- As-Built
+
+---
+
+# 16. RFI MODULE
+
+Fields:
+
+```text
+RFI_ID
+Project_ID
+RFI_No
+Subject
+Description
+Location
+Drawing_Reference
+Raised_By
+Date
+Required_By
+Response
+Response_Date
+Status
+Attachment
+```
+
+Statuses:
+
+```text
+Open
+Submitted
+Under Review
+Answered
+Closed
+Overdue
+```
+
+---
+
+# 17. MATERIAL MANAGEMENT
+
+Implement complete material workflow:
+
+```text
+Material Requirement
+↓
+MR
+↓
+MAS
+↓
+Approval
+↓
+RFQ
+↓
+Vendor Quotation
+↓
+Comparison
+↓
+Approval
+↓
+PO
+↓
+Delivery
+↓
+MIR
+↓
+Inspection
+↓
+Store
+↓
+Material Issue
+```
+
+---
+
+# 18. MAS — MATERIAL APPROVAL SUBMITTAL
+
+Fields:
+
+```text
+MAS_ID
+Material
+Category
+Make
+Model
+Specification
+Finish
+Colour
+Supplier
+Sample
+Datasheet
+Technical_Document
+Drawing
+Client_Approval
+Architect_Approval
+Status
+Remarks
+```
+
+Statuses:
+
+```text
+Draft
+Submitted
+Under Review
+Approved
+Approved with Comments
+Rejected
+Resubmit
+Closed
+```
+
+---
+
+# 19. MIR — MATERIAL INSPECTION REQUEST
+
+Fields:
+
+```text
+MIR_ID
+Material
+Supplier
+PO_Number
+Invoice_Number
+Delivery_Date
+Received_Qty
+Unit
+Specification
+Test_Certificate
+Inspection_Date
+Inspector
+Photo
+Status
+Remarks
+```
+
+Workflow:
+
+```text
+Material Delivered
+↓
+MIR Raised
+↓
+QA/QC Inspection
+↓
+Consultant Inspection
+↓
+Approved / Rejected
+↓
+Store Entry
+```
+
+---
+
+# 20. DPR — DAILY PROGRESS REPORT
+
+Create a professional DPR.
+
+Fields:
+
+```text
+DPR_ID
+Date
+Weather
+Project
+Location
+Activity
+Description
+Planned_Qty
+Actual_Qty
+Unit
+Manpower
+Equipment
+Material_Used
+Issues
+Safety_Observation
+Delay
+Next_Day_Plan
+Photos
+Prepared_By
+Approved_By
+```
+
+Allow multiple activities and photographs per DPR.
+
+---
+
+# 21. WIR — WORK INSPECTION REQUEST
+
+Workflow:
+
+```text
+Work Completed
+↓
+WIR Raised
+↓
+Internal Inspection
+↓
+QA/QC
+↓
+Consultant Inspection
+↓
+Approved / Rejected
+↓
+Rectification
+↓
+Reinspection
+↓
+Closed
+```
+
+Fields:
+
+```text
+WIR_ID
+Activity
+Location
+Drawing
+BOQ_Item
+Description
+Inspection_Date
+Requested_By
+Inspection_By
+Status
+Remarks
+Photos
+Attachments
+```
+
+---
+
+# 22. NCR MODULE
+
+Fields:
+
+```text
+NCR_ID
+Description
+Location
+Activity
+Specification
+Root_Cause
+Corrective_Action
+Preventive_Action
+Responsible
+Target_Date
+Closure_Date
+Evidence
+Status
+```
+
+Statuses:
+
+```text
+Open
+Corrective Action
+Submitted
+Under Review
+Closed
+Overdue
+```
+
+---
+
+# 23. DIGITAL MEASUREMENT BOOK
+
+Create digital measurement functionality.
+
+Fields:
+
+```text
+Measurement_ID
+BOQ_Item
+Description
+Location
+Date
+L
+W
+H
+Nos
+Calculated_Qty
+Unit
+Rate
+Amount
+Remarks
+Photo
+```
+
+Formula examples:
+
+```text
+Area = L × W
+
+Volume = L × W × H
+
+Quantity = L × W × H × Nos
+
+Amount = Quantity × Rate
+```
+
+Allow custom formulas where required.
+
+Provide:
+
+- Previous quantity
+- Current quantity
+- Cumulative quantity
+- Balance quantity
+
+QS approval must be available.
+
+---
+
+# 24. RAB / RA BILL MODULE
+
+Create complete running account bill management.
+
+Fields:
+
+```text
+RAB_ID
+Project_ID
+Billing_Period
+Bill_Date
+Previous_Qty
+Current_Qty
+Cumulative_Qty
+Rate
+Gross_Value
+Retention
+Advance_Recovery
+Other_Deductions
+Taxable_Value
+GST
+Other_Tax
+Net_Value
+Certified_Value
+Payment_Status
+```
+
+Calculate automatically.
+
+Workflow:
+
+```text
+Measurement
+↓
+RAB Preparation
+↓
+QS Verification
+↓
+PM Review
+↓
+Client Submission
+↓
+Certification
+↓
+Invoice
+↓
+Payment
+```
+
+---
+
+# 25. TAX INVOICE
+
+Create invoice generation.
+
+Include:
+
+```text
+Company
+GSTIN
+Client
+Project
+WO
+Invoice Number
+Invoice Date
+RAB Reference
+Taxable Value
+CGST
+SGST
+IGST
+Other Deduction
+Net Invoice Value
+Due Date
+Payment Status
+```
+
+Allow PDF generation and sharing.
+
+---
+
+# 26. PAYMENT / RECEIVABLE MANAGEMENT
+
+Track:
+
+```text
+Invoice Amount
+Certified Amount
+Received Amount
+Outstanding Amount
+Retention
+Advance Recovery
+Due Date
+Payment Date
+Payment Reference
+```
+
+Dashboard:
+
+```text
+Total Billing
+Total Certified
+Total Received
+Outstanding
+Overdue
+Retention
+```
+
+---
+
+# 27. VARIATION MODULE
+
+Workflow:
+
+```text
+Client Instruction
+↓
+Site Verification
+↓
+Drawing Revision
+↓
+Quantity
+↓
+Rate Analysis
+↓
+Cost Impact
+↓
+Approval
+↓
+Variation Order
+↓
+Execution
+↓
+Measurement
+↓
+Billing
+```
+
+Fields:
+
+```text
+Variation_ID
+Description
+Reason
+Instruction_Date
+BOQ_Item
+Original_Qty
+Revised_Qty
+Difference
+Rate
+Amount
+Cost_Impact
+Time_Impact
+Approval_Status
+Client_Approval
+Supporting_Document
+```
+
+---
+
+# 28. NEW ITEM / NT MODULE
+
+Create NT module for items not available in approved BOQ.
+
+Fields:
+
+```text
+NT_ID
+Project
+Description
+Specification
+Reason
+Unit
+Quantity
+Proposed_Rate
+Rate_Analysis
+Supporting_Document
+Client_Instruction
+Status
+Approved_Rate
+Approved_Amount
+```
+
+---
+
+# 29. RATE ANALYSIS
+
+Support detailed rate analysis.
+
+Example:
+
+```text
+Material
+Labour
+Equipment
+Subcontract
+Transport
+Wastage
+Overheads
+Profit
+```
+
+Calculate:
+
+```text
+Direct Cost
++
+Overhead
++
+Profit
+=
+Final Rate
+```
+
+Allow rate analysis export to PDF/Excel.
+
+---
+
+# 30. EOT MODULE
+
+Create Extension of Time management.
+
+Fields:
+
+```text
+EOT_ID
+Delay_Event
+Cause
+Description
+Affected_Activity
+Start_Date
+End_Date
+Delay_Days
+Original_Completion_Date
+Requested_Completion_Date
+Revised_Completion_Date
+Contract_Clause
+Supporting_Document
+Mitigation
+Status
+Approved_Days
+```
+
+Statuses:
+
+```text
+Draft
+Submitted
+Under Review
+Approved
+Rejected
+Partially Approved
+```
+
+---
+
+# 31. CLAIM MODULE
+
+Support:
+
+- Delay Claim
+- Cost Claim
+- Variation Claim
+- Material Escalation
+- Prolongation Cost
+- Loss & Expense
+- Other Contractual Claims
+
+Fields:
+
+```text
+Claim_ID
+Claim_Type
+Cause
+Description
+Contract_Clause
+Amount
+Submitted_Date
+Supporting_Document
+Client_Response
+Approved_Amount
+Status
+```
+
+---
+
+# 32. PROCUREMENT MODULE
+
+Workflow:
+
+```text
+MR
+↓
+RFQ
+↓
+Vendor Quotations
+↓
+Quotation Comparison
+↓
+Approval
+↓
+PO
+↓
+Delivery
+↓
+MIR
+↓
+Store
+```
+
+Vendor database:
+
+```text
+Vendor_ID
+Vendor_Name
+Contact
+Phone
+Email
+GSTIN
+Address
+Category
+Rating
+Status
+```
+
+---
+
+# 33. SUBCONTRACT MANAGEMENT
+
+Create:
+
+```text
+Subcontractor
+Subcontract WO
+Subcontract BOQ
+Subcontract Measurement
+Subcontract Bill
+Subcontract Payment
+```
+
+Track:
+
+```text
+WO Value
+Executed Value
+Billed Value
+Paid Value
+Retention
+Balance
+```
+
+---
+
+# 34. MANPOWER
+
+Track:
+
+```text
+Date
+Trade
+Subcontractor
+Skilled
+Semi-Skilled
+Unskilled
+Total
+Location
+Shift
+Remarks
+```
+
+Generate manpower trends.
+
+---
+
+# 35. EQUIPMENT
+
+Track:
+
+```text
+Equipment
+Owner
+Quantity
+Working Hours
+Fuel
+Location
+Operator
+Breakdown
+Maintenance
+```
+
+---
+
+# 36. MOM MODULE
+
+Fields:
+
+```text
+MOM_ID
+Meeting_Date
+Meeting_Type
+Participants
+Discussion
+Decision
+Action
+Responsible
+Due_Date
+Status
+```
+
+Automatically generate action items.
+
+---
+
+# 37. TASK MANAGEMENT
+
+Fields:
+
+```text
+Task_ID
+Project
+Task
+Description
+Responsible
+Priority
+Start_Date
+Due_Date
+Status
+Completion
+Remarks
+```
+
+Statuses:
+
+```text
+Open
+In Progress
+Completed
+Overdue
+Cancelled
+```
+
+---
+
+# 38. SNAGGING
+
+Create snag management.
+
+Fields:
+
+```text
+Snag_ID
+Location
+Category
+Description
+Priority
+Raised_Date
+Responsible
+Target_Date
+Photo
+Rectification
+Closure_Photo
+Closed_Date
+Status
+```
+
+Categories:
+
+```text
+Civil
+Interior
+Electrical
+HVAC
+Plumbing
+Fire
+Furniture
+Finishing
+Other
+```
+
+---
+
+# 39. TESTING & COMMISSIONING
+
+Track:
+
+```text
+System
+Test
+Date
+Location
+Test Standard
+Result
+Test Certificate
+Witnessed By
+Status
+```
+
+---
+
+# 40. AS-BUILT DOCUMENTATION
+
+Track:
+
+```text
+Drawing Number
+Revision
+Discipline
+Description
+Submission Date
+Approval
+File
+Remarks
+```
+
+---
+
+# 41. HANDOVER
+
+Create handover checklist.
+
+Include:
+
+- Snag Closure
+- Testing
+- Commissioning
+- As-Built
+- O&M Manual
+- Warranty
+- Keys
+- Asset List
+- Client Training
+- Final Cleaning
+- Completion Certificate
+
+---
+
+# 42. FINAL BILL
+
+Track:
+
+```text
+Contract Value
+Approved Variation
+Final Executed Value
+Previous Billing
+Current Bill
+Final Bill Value
+Retention
+Advance Recovery
+Deductions
+Certified Amount
+Balance
+```
+
+---
+
+# 43. FINAL ACCOUNT
+
+Create final account module.
+
+Include:
+
+```text
+Original Contract
+Approved Variations
+Approved NT
+Final Quantities
+Final Value
+Retention
+Advance
+Deductions
+Payments
+Outstanding
+Security Deposit
+Final Settlement
+```
+
+---
+
+# 44. DLP / WARRANTY
+
+Track:
+
+```text
+DLP Start
+DLP End
+Warranty Item
+Responsible Party
+Complaint
+Date
+Rectification
+Closure
+Status
+```
+
+Notifications must be generated for upcoming warranty expiry.
+
+---
+
+# 45. PROJECT CLOSURE
+
+Closure checklist:
+
+```text
+Final Bill
+Final Account
+All Payments
+All Documents
+As-Built
+O&M
+Warranty
+DLP
+Snag Closure
+Material Reconciliation
+Subcontract Settlement
+Client Handover
+Project Completion Certificate
+Lessons Learned
+Project Closed
+```
+
+---
+
+# 46. DOCUMENT MANAGEMENT
+
+Create project-wise Google Drive structure:
+
+```text
+Project Tracker/
+    PRJ-0001/
+        01-Contract/
+        02-Tender/
+        03-BOQ/
+        04-Drawings/
+        05-RFI/
+        06-MAS/
+        07-MIR/
+        08-DPR/
+        09-WIR/
+        10-NCR/
+        11-Measurements/
+        12-RAB/
+        13-Invoices/
+        14-Payments/
+        15-Variations/
+        16-NT/
+        17-EOT/
+        18-Claims/
+        19-Procurement/
+        20-Subcontract/
+        21-MOM/
+        22-Snag/
+        23-AsBuilt/
+        24-Handover/
+        25-FinalAccount/
+        26-DLP/
+        27-Closure/
+```
+
+---
+
+# 47. PHOTO MANAGEMENT
+
+Every site photograph should support:
+
+```text
+Photo_ID
+Project_ID
+Module
+Record_ID
+Date
+Location
+Description
+Latitude/Longitude if permission is available
+Captured_By
+Drive_URL
+```
+
+Do not require location permission unless the feature is enabled.
+
+---
+
+# 48. SEARCH
+
+Create global search.
+
+Search across:
+
+```text
+Projects
+Tender
+WO
+BOQ
+Drawings
+RFI
+MR
+MAS
+MIR
+DPR
+WIR
+NCR
+Measurements
+RAB
+Invoice
+Payment
+Variation
+NT
+EOT
+Claim
+Vendor
+Subcontractor
+Documents
+Snags
+```
+
+---
+
+# 49. NOTIFICATIONS
+
+Generate notifications for:
+
+```text
+Overdue RFI
+Pending MAS
+Pending MIR
+Pending WIR
+Open NCR
+Pending RAB
+Pending Invoice
+Outstanding Payment
+Pending Variation
+Pending NT
+Pending EOT
+Open Claim
+Overdue Task
+Delayed Material
+Material Shortage
+Open Snag
+Warranty Expiry
+DLP Expiry
+Project Completion
+```
+
+Use local notifications where possible.
+
+---
+
+# 50. PROJECT HEALTH SCORE
+
+Create automatic project health analysis.
+
+Consider:
+
+```text
+Progress
+Schedule
+Cost
+Billing
+Receivable
+RFI
+NCR
+Material
+Manpower
+Variation
+EOT
+Snags
+```
+
+Classify:
+
+```text
+HEALTHY
+AT RISK
+CRITICAL
+```
+
+Display reasons for the score.
+
+---
+
+# 51. REPORTING
+
+Create reports:
+
+### Project
+
+- Project Summary
+- Project Progress
+- Planned vs Actual
+- Project Health
+
+### QS / Commercial
+
+- BOQ
+- Measurement
+- RAB
+- Invoice
+- Receivable
+- Variation
+- NT
+- Rate Analysis
+- EOT
+- Claims
+
+### Site
+
+- DPR
+- Manpower
+- Equipment
+- Progress
+
+### QA/QC
+
+- MAS
+- MIR
+- WIR
+- NCR
+- Testing
+
+### Procurement
+
+- MR
+- RFQ
+- PO
+- Material Delivery
+- Material Pending
+
+### Completion
+
+- Snag
+- Handover
+- Final Bill
+- Final Account
+- DLP
+
+Reports must support:
+
+```text
+PDF
+Excel
+CSV
+Print
+Share
+```
+
+---
+
+# 52. DASHBOARD DESIGN
+
+Create a professional construction ERP dashboard.
+
+Use:
+
+- Dark Mode
+- Light Mode
+- System Theme
+- Material 3
+- Cards
+- Charts
+- Progress Indicators
+- Status Badges
+- Search
+- Filters
+- Sort
+- Quick Actions
+
+Quick actions:
+
+```text
+New Project
+New Tender
+New BOQ
+New DPR
+New WIR
+New MIR
+New MAS
+New Measurement
+New RAB
+New Variation
+New NT
+New EOT
+New Snag
+```
+
+---
+
+# 53. ANDROID FEATURES
+
+Use Android capabilities for:
+
+- Camera
+- Photo Picker
+- File Picker
+- Notifications
+- Network Detection
+- PDF Viewer
+- Share
+- Call
+- Email
+- WhatsApp sharing
+- Google Maps
+- Back Button
+- Deep Links
+
+Request only necessary permissions.
+
+---
+
+# 54. SECURITY
+
+Implement:
+
+- Role-based authorization
+- Project-level authorization
+- API authentication
+- Session control
+- Input validation
+- Secure local storage
+- Audit log
+- HTTPS
+- No hard-coded passwords
+- No API secrets in source code
+- No direct Google Sheet credentials
+- Least privilege
+- File access control
+
+Every important modification must create an audit record.
+
+---
+
+# 55. AUDIT LOG
+
+Record:
+
+```text
+User
+Project
+Module
+Record_ID
+Action
+Old_Value
+New_Value
+Date
+Time
+Device
+```
+
+Actions:
+
+```text
+CREATE
+UPDATE
+DELETE
+APPROVE
+REJECT
+SUBMIT
+CLOSE
+LOGIN
+LOGOUT
+SYNC
+```
+
+Normal users must not be allowed to modify audit logs.
+
+---
+
+# 56. API DESIGN
+
+Create structured API endpoints through Google Apps Script.
+
+Examples:
+
+```text
+/auth/login
+/auth/user
+/projects/list
+/projects/create
+/projects/update
+/boq/list
+/boq/create
+/dpr/create
+/wir/create
+/mir/create
+/mas/create
+/rab/create
+/variation/create
+/eot/create
+/documents/upload
+/sync/push
+/sync/pull
+```
+
+The exact implementation may use Apps Script routing rather than literal URL paths, but maintain clear API actions.
+
+---
+
+# 57. SYNC ENGINE
+
+Every offline transaction must receive a local status:
+
+```text
+PENDING_SYNC
+SYNCING
+SYNCED
+FAILED
+CONFLICT
+```
+
+Create:
+
+```text
+Sync Queue
+Sync Manager
+Retry Handler
+Conflict Resolver
+Sync Log
+```
+
+Allow manual:
+
+```text
+SYNC NOW
+```
+
+---
+
+# 58. IMPORT / EXPORT
+
+Support:
+
+```text
+Excel
+CSV
+PDF
+JSON
+```
+
+Import:
+
+- BOQ
+- Vendor
+- Project
+- Material
+- Employee/User where permitted
+
+Export:
+
+- Reports
+- BOQ
+- RAB
+- Measurement
+- Vendor
+- Project data
+
+---
+
+# 59. PROJECT-WISE ACCESS
+
+If User A is assigned to Project A:
+
+User A must not automatically access Project B.
+
+Admin can access all projects.
+
+Project Manager can access assigned projects.
+
+Users must receive project permissions based on:
+
+```text
+User_ID
+Project_ID
+Role
+Permission
+```
+
+---
+
+# 60. AI PROJECT ASSISTANT — PHASE 2
+
+Do not make AI mandatory for the core application.
+
+Later add an AI Project Assistant capable of answering authorized project-data questions such as:
+
+```text
+What RABs are pending?
+Which materials are delayed?
+Which WIRs are pending?
+What is the current project progress?
+Which BOQ items have balance quantity?
+What variations are pending?
+What EOT items are open?
+What payments are outstanding?
+Which NCRs are overdue?
+Which snags are pending?
+```
+
+AI must only access data that the logged-in user is authorized to see.
+
+---
+
+# 61. UI NAVIGATION
+
+Recommended bottom navigation:
+
+```text
+Home
+Projects
+Tasks
+Reports
+More
+```
+
+Inside Project:
+
+```text
+Overview
+Tender
+Contract
+BOQ
+Design
+Procurement
+Materials
+Execution
+QA/QC
+Measurements
+Billing
+Commercial
+Subcontract
+Management
+Completion
+Documents
+```
+
+---
+
+# 62. PROJECT OVERVIEW
+
+Project Overview should display:
+
+```text
+Project Name
+Client
+Contract Value
+Start Date
+Completion Date
+Progress
+Billing
+Receivable
+Variation
+EOT
+Open Issues
+```
+
+with quick action buttons.
+
+---
+
+# 63. VALIDATION
+
+Implement strict validation.
+
+Examples:
+
+- Required fields
+- Valid dates
+- Quantity cannot be negative
+- Rate cannot be invalid
+- Invoice number validation
+- Duplicate Record_ID prevention
+- Duplicate BOQ Item Code prevention
+- Mandatory project selection
+- Mandatory approval fields
+- File type validation
+- File size validation
+
+Show useful error messages.
+
+Never display technical errors directly to users.
+
+---
+
+# 64. PERFORMANCE
+
+The application should support approximately:
+
+```text
+100+ Projects
+1,000+ BOQ Items per Project
+10,000+ Transaction Records
+Large Document Registers
+Large Photo Registers
+```
+
+Use pagination, lazy loading, caching, indexing, and optimized queries.
+
+---
+
+# 65. TEST PROJECT
+
+Create a test project:
+
+```text
+Project ID:
+PRJ-TEST-001
+
+Project Name:
+Test Office Interior Fit-Out
+
+Contract Value:
+₹1,00,00,000
+
+Duration:
+180 Days
+```
+
+Test this complete lifecycle:
+
+```text
+Tender
+↓
+Tender Value ₹90,00,000
+↓
+Bid ₹1,00,00,000
+↓
+Work Order ₹1,00,00,000
+↓
+Project Creation
+↓
+BOQ
+↓
+Drawing
+↓
+MAS
+↓
+MR
+↓
+MIR
+↓
+DPR
+↓
+WIR
+↓
+Measurement
+↓
+RAB-01
+↓
+Invoice
+↓
+Payment
+↓
+Variation ₹5,00,000
+↓
+EOT
+↓
+Snag
+↓
+Handover
+↓
+Final Bill
+↓
+Final Account
+↓
+DLP
+↓
+Project Closed
+```
+
+Every stage must be testable.
+
+---
+
+# 66. QA TESTING
+
+Test:
+
+### Authentication
+
+- Login
+- Logout
+- Password
+- Role
+- Permissions
+
+### Project
+
+- Create
+- Update
+- Assign Team
+- Access Control
+
+### Tender
+
+- Create
+- BOQ
+- Rate Analysis
+- Evaluation
+- LOI
+- WO
+
+### BOQ
+
+- Create
+- Edit
+- Revision
+- Quantity
+- Rate
+
+### Site
+
+- DPR
+- WIR
+- MIR
+- MAS
+- Measurement
+- Photos
+
+### Commercial
+
+- RAB
+- Invoice
+- Payment
+- Receivable
+- Variation
+- NT
+- EOT
+- Claim
+
+### Completion
+
+- Snag
+- Testing
+- As-Built
+- Handover
+- Final Bill
+- Final Account
+- DLP
+- Closure
+
+### Offline
+
+- Create offline
+- Edit offline
+- Sync
+- Retry
+- Conflict
+- Recovery
+
+---
+
+# 67. ERROR HANDLING
+
+Never allow application crashes because of:
+
+- No Internet
+- Empty API response
+- Invalid data
+- Missing document
+- Authentication expiry
+- Sync failure
+- Duplicate record
+- Server error
+
+Use user-friendly messages.
+
+Example:
+
+```text
+Unable to sync right now.
+Your data has been safely saved on this device.
+It will be synchronized when the connection is restored.
+```
+
+---
+
+# 68. PROJECT FILE STRUCTURE
+
+Create a professional structure similar to:
+
+```text
+ProjectTracker/
+│
+├── android/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   ├── res/
+│   │   │   └── AndroidManifest.xml
+│
+├── data/
+│   ├── local/
+│   ├── remote/
+│   ├── repository/
+│
+├── domain/
+│   ├── models/
+│   ├── usecases/
+│
+├── presentation/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── projects/
+│   ├── tender/
+│   ├── boq/
+│   ├── drawings/
+│   ├── procurement/
+│   ├── materials/
+│   ├── execution/
+│   ├── qaqc/
+│   ├── billing/
+│   ├── commercial/
+│   ├── subcontract/
+│   ├── completion/
+│   └── reports/
+│
+├── sync/
+├── security/
+├── notifications/
+├── utils/
+│
+├── google-apps-script/
+│   ├── Code.gs
+│   ├── Auth.gs
+│   ├── Projects.gs
+│   ├── BOQ.gs
+│   ├── Tender.gs
+│   ├── Billing.gs
+│   ├── Sync.gs
+│   └── Drive.gs
+│
+├── database/
+│   └── PROJECT_TRACKER_DATABASE.xlsx
+│
+├── docs/
+│   ├── Architecture.md
+│   ├── API.md
+│   ├── Database.md
+│   └── Testing.md
+│
+└── README.md
+```
+
+Adjust the structure if required by the selected Android technology, but keep clear separation between UI, domain, data, synchronization, security, and backend.
+
+---
+
+# 69. DEVELOPMENT PHASES
+
+Build in this exact sequence.
+
+### PHASE 0
+Architecture
+
+### PHASE 1
+Authentication & User Management
+
+### PHASE 2
+Project Management
+
+### PHASE 3
+Google Sheets + Google Drive + Apps Script API
+
+### PHASE 4
+Tender Management
+
+### PHASE 5
+BOQ + Drawings + RFI
+
+### PHASE 6
+Procurement + Material + MAS + MIR
+
+### PHASE 7
+DPR + Execution + Manpower + Equipment
+
+### PHASE 8
+QA/QC + WIR + NCR + Testing
+
+### PHASE 9
+Measurement + RAB + Billing
+
+### PHASE 10
+Commercial + Variation + NT + EOT + Claims
+
+### PHASE 11
+Subcontract Management
+
+### PHASE 12
+MOM + Tasks + Risks + Issues + Notifications
+
+### PHASE 13
+Snag + Testing + As-Built + Handover
+
+### PHASE 14
+Final Bill + Final Account + DLP + Closure
+
+### PHASE 15
+Offline Engine + Sync + Conflict Resolution
+
+### PHASE 16
+Reports + PDF + Excel + CSV
+
+### PHASE 17
+Android Optimization + Security + Performance
+
+### PHASE 18
+AI Project Assistant
+
+### PHASE 19
+Complete QA + Production Release
+
+---
+
+# 70. PHASE 0 INSTRUCTION
+
+For your FIRST response, DO NOT start generating the complete application.
+
+Only provide:
+
+1. System Architecture
+2. Application Architecture
+3. Module Map
+4. Database Structure
+5. Database Relationship Map
+6. Role & Permission Matrix
+7. API Architecture
+8. Google Apps Script Architecture
+9. Google Drive Architecture
+10. Offline Database Architecture
+11. Sync Architecture
+12. Security Architecture
+13. Android Architecture
+14. Folder Structure
+15. Navigation Structure
+16. Development Sequence
+17. Testing Strategy
+18. Deployment Strategy
+19. Risks and Mitigation
+20. Recommended Technology Stack
+
+After Phase 0 is approved, proceed to Phase 1.
+
+---
+
+# 71. IMPORTANT DEVELOPMENT RULE
+
+Do not modify architecture randomly between phases.
+
+Maintain:
+
+```text
+Record_ID
+Project_ID
+User_ID
+Version
+Created_At
+Updated_At
+Created_By
+Updated_By
+Status
+```
+
+throughout the entire application.
+
+All modules must remain connected.
+
+For example:
+
+```text
+Tender
+    ↓
+BOQ
+    ↓
+Work Order
+    ↓
+Project
+    ↓
+Approved BOQ
+    ↓
+Execution
+    ↓
+Measurement
+    ↓
+RAB
+    ↓
+Invoice
+    ↓
+Payment
+    ↓
+Final Account
+```
+
+Similarly:
+
+```text
+Material Requirement
+    ↓
+MAS
+    ↓
+RFQ
+    ↓
+Quotation
+    ↓
+Comparison
+    ↓
+PO
+    ↓
+Delivery
+    ↓
+MIR
+    ↓
+Store
+    ↓
+Material Issue
+    ↓
+Execution
+```
+
+And:
+
+```text
+Drawing
+    ↓
+Revision
+    ↓
+RFI
+    ↓
+Approval
+    ↓
+Execution
+    ↓
+WIR
+    ↓
+Measurement
+    ↓
+RAB
+```
+
+---
+
+# 72. CRITICAL REQUIREMENT
+
+This is a real-world **Civil & Interior Construction Project Management Application**.
+
+Do not simplify construction workflows into generic task management.
+
+Use correct construction terminology such as:
+
+- BOQ
+- GFC
+- IFC
+- RFI
+- MAS
+- MIR
+- WIR
+- DPR
+- NCR
+- MB
+- Measurement
+- RAB
+- RA Bill
+- Tax Invoice
+- Variation
+- NT
+- Rate Analysis
+- EOT
+- Claim
+- PBG
+- Retention
+- Advance Recovery
+- Subcontract
+- Snag
+- As-Built
+- O&M
+- DLP
+- Final Account
+
+The application must be suitable for **Civil Construction, Interior Fit-Out, Renovation, Commercial, Office, Retail, Hospital, Hospitality and similar projects**.
+
+---
+
+# 73. FINAL DEVELOPMENT RULE
+
+At the end of every phase provide:
+
+### 1. Completed Features
+
+### 2. Files Created
+
+### 3. Files Modified
+
+### 4. Database Changes
+
+### 5. API Changes
+
+### 6. Security Changes
+
+### 7. Test Results
+
+### 8. Known Issues
+
+### 9. Next Phase
+
+Do not proceed to the next major phase until the current phase has been validated.
+
+When modifying an existing file, provide the **complete updated file**, not only a code fragment.
+
+Never remove an already working feature unless explicitly instructed.
+
+Build **Project Tracker** as a production-quality construction management platform, not as a prototype.
